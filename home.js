@@ -15,18 +15,26 @@ async function showChapters() {
     const chapters = await getChapters();   // already sorted by title
     listBox.textContent = chapters.length ? "" : "No chapters yet. Upload a PDF above!";
 
-    chapters.forEach(chapter => {
-      const link = document.createElement("a");
-      link.className = "chapter-card";
-      link.textContent = chapter.post_title || "Untitled";   // textContent is safe (no HTML tricks)
-      link.href = "reader.html?id=" + encodeURIComponent(chapter.post_id);
-      listBox.appendChild(link);
-    });
-  } catch (err) {
-    listBox.textContent = "Could not load chapters: " + err.message +
-      ". Open the browser console (F12) to see more.";
-  }
-}
+   chapters.forEach(chapter => {
+  const row = document.createElement("div");
+  row.style.display = "flex";
+  row.style.gap = "8px";
+  row.style.alignItems = "center";
+
+  const link = document.createElement("a");
+  link.className = "chapter-card";
+  link.style.flex = "1";
+  link.textContent = chapter.post_title || "Untitled";
+  link.href = "reader.html?id=" + encodeURIComponent(chapter.post_id);
+
+  const del = document.createElement("button");
+  del.textContent = "Delete";
+  del.onclick = () => deleteChapter(chapter.post_id, chapter.post_title);
+
+  row.appendChild(link);
+  row.appendChild(del);
+  listBox.appendChild(row);
+});
 
 // ---- 2) UPLOAD -------------------------------------------------------
 // This runs when the Upload button is clicked.
@@ -74,7 +82,38 @@ document.getElementById("uploadBtn").onclick = async function () {
   statusEl.textContent = "Done! Uploaded " + done + " file(s) ✅";
   showChapters();   // refresh the list
 };
+// ---- 3) DELETE ONE ---------------------------------------------------
+async function deleteChapter(id, title) {
+  if (!confirm('Delete "' + (title || "Untitled") + '" from the cloud?')) return;
+  const key = prompt("Admin password:");
+  if (!key) return;
 
+  statusEl.textContent = "Deleting...";
+  try {
+    const res = await fetch(API_BASE + "delete/" + encodeURIComponent(id) +
+                            "?key=" + encodeURIComponent(key), { method: "POST" });
+    statusEl.textContent = res.ok ? "Deleted ✅" : "Delete failed (wrong password or error " + res.status + ").";
+  } catch (err) {
+    statusEl.textContent = "Network/CORS error: " + err.message;
+  }
+  showChapters();
+}
+
+// ---- 4) DELETE ALL ---------------------------------------------------
+document.getElementById("deleteAllBtn").onclick = async function () {
+  if (!confirm("Delete ALL chapters from the cloud? This cannot be undone.")) return;
+  const key = prompt("Admin password:");
+  if (!key) return;
+
+  statusEl.textContent = "Deleting everything...";
+  try {
+    const res = await fetch(API_BASE + "deleteall/?key=" + encodeURIComponent(key), { method: "POST" });
+    statusEl.textContent = res.ok ? "All chapters deleted ✅" : "Delete failed (wrong password or error " + res.status + ").";
+  } catch (err) {
+    statusEl.textContent = "Network/CORS error: " + err.message;
+  }
+  showChapters();
+};
 showChapters();
 
 /* HOW TO IMPROVE: add a delete endpoint in Oracle + a delete button here,
