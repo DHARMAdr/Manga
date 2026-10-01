@@ -45,6 +45,12 @@ body {
 }
 .btn:hover { border-color: var(--accent); }
 .btn.primary { background: var(--accent); color: #000; border: none; font-weight: bold; }
+#chapterList button, #deleteAllBtn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #888;
+  cursor: pointer;
+}
 
 /* HOME PAGE */
 .container { max-width: 900px; margin: 0 auto; padding: 20px; }
