@@ -51,7 +51,7 @@ body {
   border: 1px solid #888;
   cursor: pointer;
 }
-
+.btn.danger { background: #b3261e; color: #fff; border: none; }
 /* HOME PAGE */
 .container { max-width: 900px; margin: 0 auto; padding: 20px; }
 .card { background: var(--card); padding: 16px; border-radius: 8px; margin-bottom: 24px; }
