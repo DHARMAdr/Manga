@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- =====================================================================
+  reader.html  -  the READER PAGE
+  WHY: Shows ALL chapters one after another in one long scroll.
+  The empty boxes below are filled by reader.js.
+====================================================================== -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading...</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="reader-body">
+
+  <header class="topbar">
+    <a class="logo" href="index.html">MANGA<span>READER</span></a>
+    <button id="themeBtn" class="btn">☀️ White</button>
+  </header>
+
+  <!-- All chapters go here (centered column) -->
+  <main id="reader"></main>
+
+  <!-- Bottom LEFT: chapter dropdown list -->
+  <select id="chapterSelect" class="float-left" title="Choose chapter"></select>
+
+  <!-- Bottom RIGHT: go to the top / go to the end -->
+  <div class="float-right">
+    <button id="toTop" class="btn" title="Go to start">▲</button>
+    <button id="toEnd" class="btn" title="Go to end">▼</button>
+  </div>
+
+  <!-- PDF.js = the library that reads PDF files in the browser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="config.js"></script>
+  <script src="common.js"></script>
+  <script src="reader.js"></script>
+</body>
+</html>

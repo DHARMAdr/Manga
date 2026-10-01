@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- =====================================================================
+  index.html  -  the HOME PAGE (upload box + chapter list)
+  HTML = skeleton, style.css = looks, home.js = the actions.
+====================================================================== -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Manga Reader</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="logo" href="index.html">MANGA<span>READER</span></a>
+    <button id="themeBtn" class="btn">☀️ White</button>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+      <h2>Upload a PDF</h2>
+      <p class="hint">
+        Choose one or more PDF files. They are saved in your Oracle Cloud
+        database and sorted by title.
+      </p>
+      <!-- Title is optional. If empty, the PDF file name is used. -->
+      <input id="title" type="text" placeholder="Chapter title (optional), e.g. Chapter 1">
+      <input id="files" type="file" multiple accept=".pdf,application/pdf">
+      <button id="uploadBtn" class="btn primary">Upload</button>
+      <p id="status"></p>
+    </section>
+
+    <section>
+      <h2>All chapters</h2>
+      <a class="btn primary" href="reader.html">▶ Read from the start</a>
+      <div id="chapterList" class="grid"></div>
+    </section>
+
+  </main>
+
+  <!-- Only 3 of our own files are needed here -->
+  <script src="config.js"></script>
+  <script src="common.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>
